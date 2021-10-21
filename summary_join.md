@@ -63,7 +63,7 @@ values (101, "daniel craig", 50),
 select *
 from actor_table ;
 ```
-![join_1.png](./images/join_1.png)
+![join_1.PNG](./images/join_1.PNG)
 
 - film 테이블 확인
 ```
