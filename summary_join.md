@@ -1,4 +1,4 @@
-# join
+# 테이블 합치기 : join
 - 여러개의 테이블을 합해준다. 
 - 기본적으로 inner join, left join, right join, outer join 이 있다.
 - 행을 기준으로 데이터를 합한다.
