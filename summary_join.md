@@ -63,14 +63,14 @@ values (101, "daniel craig", 50),
 select *
 from actor_table ;
 ```
-![join_1.png](./images/join_1.png)
+![join_1.PNG](./images/join_1.PNG)
 
 - film 테이블 확인
 ```
 select *
 from film_table ;
 ```
-![join_2.png](./images/join_2.png)
+![join_2.PNG](./images/join_2.PNG)
 
 
 ## query
@@ -87,7 +87,7 @@ from film_table
 join actor_table
 on film_table.film_id = actor_table.film_id ;
 ```
-![join_join.png](./images/join_join.png)
+![join_join.PNG](./images/join_join.PNG)
 
 ### left join, right join 
 - left join 과 right join 은 두개의 테이블 중에서 left, right로 정한 테이블을 기준으로 합한다.
@@ -109,7 +109,7 @@ from film_table
 left join actor_table
 on film_table.film_id = actor_table.film_id ;
 ```
-![join_left.png](./images/join_left.png)
+![join_left.PNG](./images/join_left.PNG)
 
 - rignt join
 - film_table 이 왼쪽으로 설정되었고, right join actor_table 에서 오른쪽 테이블이 기준이 된다.
@@ -121,7 +121,7 @@ from film_table
 right join actor_table
 on film_table.film_id = actor_table.film_id ;
 ```
-![join_righ.png](./images/join_right.png)
+![join_righ.PNG](./images/join_right.PNG)
 
 ### 왼쪽 테이블로 actor_table 을 설정한 경우
 - from film_table 을 설정한 경우와 반대로 출력된다. 
@@ -134,7 +134,7 @@ from actor_table
 left join film_table
 on film_table.film_id = actor_table.film_id ;
 ```
-![join_left_2.png](./images/join_left_2.png)
+![join_left_2.PNV](./images/join_left_2.PNG)
 
 - right join
 - from film_table 의 left join actor_table 과 같은 결과가 출력된다.
