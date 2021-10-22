@@ -40,5 +40,5 @@ rename table actor_table to actor,
 ```
 alter table example.actor rename world.actor ;
 ```
-![rename_5.PNG](./image/rename_5.PNG)
+![rename_5.PNG](./images/rename_5.PNG)
 
