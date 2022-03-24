@@ -1,6 +1,8 @@
 # MySQL 문법 기본 정리
 - HidiSQL을 기반으로 정리함
 
+## 데이터 베이스, 테이블 생성
+
 ### 1. 데이터 베이스 만들기
 ```sql
 CREATE DATABASE taxi_trips ; 
@@ -88,6 +90,10 @@ CREATE TABLE taxi_info_1 (
    - SET DEFAULT : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼은 기본값으로 변경된다.
    - RESTRICT : 참조 컬럼에 데이터가 남아있으면, 참조되는 테이블의 데이터를 수정, 삭제할 수 없다. 
    - FORIEGN KEY는 따로 정리할 것
+- **DEFAULT** : 데이터를 저장할 때 컬럼에 별도의 저장값이 없으면 DEAFAULT로 설정된 값이 저장된다.
+- **AUTO_INCREMENT** : 주로 테이블의 PRIMARY KEY 데이터를 저장할 때 자동으로 숫자를 1씩 증가시켜 준다. 
+
+
 ```sql
 CONSTRAINT 외래키명
 FOREIGN KEY (참조되는 컬럼명)
@@ -214,6 +220,110 @@ VALUES
 ```
 
 ![baisc_15.png](./images/baisc_15.png)
+
+
+## 데이터 서치
+
+### 1. SELECT
+- 기본 사용
+   - SELECT 다음에 사용할 컬럼명을 나열한다.
+   - FROM 다음에 테이블명을 입력한다.
+
+```sql
+SELECT <column_name_1>, <column_name_2>, <column_name_3>, ...
+FROM <table_name> ;
+```
+
+- 전체 컬럼 불러오기
+
+```sql
+SELECT name, countrycode
+FROM city ;
+```
+
+![baisc_16.png](./images/baisc_16.png)
+
+- 일부 컬럼 불러오기
+
+```sql
+SELECT name, countrycode
+FROM city ;
+```
+
+![baisc_17.png](./images/baisc_17.png)
+
+
+### 2. ALIAS
+- 컬럼을 불러올 때 alias(as)를 사용하여 컬럼명을 변경할 수 있다.
+   - name -> re_name, countyrcode -> re_countrycode
+   - 테이블에 저장되는 것은 아니다. 불러올 때만 컬럼명이 바뀐다.
+
+```sql
+SELECT name as "re_name", countrycode as "re_country_code"
+FROM city ;
+```
+
+![baisc_18.png](./images/baisc_18.png)
+
+
+### 3. DISTINCT
+- 중복데이터를 제거하여 불러온다.
+   - countrycode에서 중복인 데이터를 하나로 합쳐서 불러오기
+
+```sql
+SELECT DISTINCT(countrycode)
+FROM city ;
+```
+
+### 4. WHERE 
+- WHERE절을 이용하여 검색 조건을 추가할 수 있다.
+   - AND, OR, 연산자 등의 기능을 사용할 수 있다.
+
+- 인구가 100만명 이상인 데이터 불러오기
+
+```sql
+SELECT *
+FROM city
+WHERE population >= 1000000 ;
+```
+
+![baisc_19.png](./images/baisc_19.png)
+
+#### AND 를 사용하여 여러가지 조건 추가
+- id가 50 이하이고 인구수가 100만명 이상인 데이터 불러오기
+
+```sql
+SELECT *
+FROM city
+WHERE id <= 50 AND population >= 1000000 ;
+```
+
+![baisc_20.png](./images/baisc_20.png)
+
+#### OR 을 사용하여 여러가지 조건 추가
+- surfacearea 가 60만 이상이거나 또는 인구수가 1000만명 이상인 데이터 불러오기 (일부컬럼 선택)
+
+```sql
+SELECT code, name, continent, region, surfacearea, population
+FROM country
+WHERE surfacearea >= 600000 OR population >= 10000000 ;
+```
+
+![baisc_21.png](./images/baisc_21.png)
+
+#### BETWEEN 을 사용하여 여러가지 조건 추가
+- 하나의 조건의 범위를 지정해준다.
+- 인구수가 1천만 이상 5천만 이하인 데이터 불러오기
+
+```sql
+SELECT code, name, continent, region, population
+FROM country
+WHERE population BETWEEN 10000000 AND 50000000 ;
+```
+
+![baisc_22.png](./images/baisc_22.png)
+
+
 
 
 
