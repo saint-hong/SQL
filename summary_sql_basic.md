@@ -16,7 +16,7 @@ USE taxi_trips ;
 SELECT DATABASE() ; 
 ```
 
-![basic_1.png](./images/basic_1.png)
+![baisc_1.png](./images/basic_1.png)
 
 ### 4. 테이블 만들기
 - 현재 선택된 데이터 베이스 하위에 테이블이 만들어 진다.
