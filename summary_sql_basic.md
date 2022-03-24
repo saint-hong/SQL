@@ -2,13 +2,12 @@
 - HidiSQL을 기반으로 정리함
 
 ### 1. 데이터 베이스 만들기
-- 라이드헤일링 서비스인 공유형 택시의 운행 데이터를 가정으로 만들어 보기.
 ```sql
 CREATE DATABASE taxi_trips ; 
 ```
 
 ### 2. 데이터 베이스 선택하기
-```spl
+```sql
 USE taxi_trips ; 
 ```
 
@@ -113,24 +112,108 @@ CREATE TABLE taxi_info_2 (
 ```
 ![baisc_3.png](./images/baisc_3.png)
 
+### 4. 데이터 베이스, 테이블 수정하기
+- 유형, 제약조건, 컬럼 등을 수정, 삭제 할 수 있다.
+- ALTER DATABASE 데이터베이스명 수정내용
+- ALTER TABLE 테이블명 수정내용
+
+#### 1) 데이터 베이스의 encoding 변경
+- 데이터 특징에 따라서 encoding 값을 변경해주어야 한다. 
+
+- encoding 확인
+
+```sql
+SHOW VARIABLES LIKE "character_set_database" ;
+```
+
+![baisc_8.png](./images/baisc_8.png)
+
+- encoding 변경
+
+```sql
+ALTER DATABASE taxi_trips CHARACTER SET = utf8 ;
+ALTER DATABASE taxi_trips CHARACTER SET = ascii ; 
+```
+
+![baisc_9.png](./images/baisc_9.png)
+![baisc_10.png](./images/baisc_10.png)
+
+#### 2) 테이블에 컬럼 추가하기
+- taxi_info_2 테이블에 tmp 컬럼을 추가하고 유형을 TEXT로 지정
+
+```sql
+ALTER TABLE taxi_info_2 ADD tmp TEXT ; 
+```
+
+![baisc_11.png](./images/baisc_11.png)
+
+#### 3) 테이블 유형 변경하기
+- taxi_info_2 테이블의 tmp 컬럼의 데이터 유형을 INT(10)으로 변경
+
+```sql
+ALTER TABLE taxi_info_2 MODIFY COLUMN tmp INT(10) ;
+```
+
+![baisc_12.png](./images/baisc_12.png)
+
+#### 4) 테이블에서 컬럼 삭제하기
+- taxi_info_2 테이블에서 tmp 컬럼 삭제
+
+```sql
+ALTER TABLE taxi_info_2 DROP tmp ;
+```
+
+#### 5) 데이터 베이스 삭제하기
+- 현재 데이터 베이스 확인
+
+```sql
+SHOW DATABASES ;
+```
+
+![baisc_13.png](./images/baisc_13.png)
+
+- test 데이터 베이스 삭제
+
+```sql
+DROP DATABASE test ;
+```
+
+![baisc_14.png](./images/baisc_14.png)
+
+#### 6) 데이터 베이스, 테이블 생성, 삭제 
+- **테이블의 수정, 변경등은 반드시 "USE 데이터베이스이름" 으로 현재 작업 위치를 바꿔주어야 한다.**
+```sql
+CREATE DATABASE tmp ;
+USE tmp ;
+CREATE TABLE tmp(id INT(10), name CHAR(10), notice VARCHAR(10)) ;
+DROP TABLE tmp ;
+DROP DATABASE tmp ;
+```
+
+### 5. 데이터 입력
+- taxi_trips 데이터 베이스의 taxi_info_1 테이블에 데이터를 입력한다.
+   - 테이블명 뒤의 컬럼명은 입력안해도 된다.
+   - 입력 데이터의 갯수는 컬럼의 수와 일치 해야 한다.
+   - 테이블의 데이터 유형에 맞도록 데이터를 입력해야 한다. 
+
+```sql
+INSERT INTO 테이블명 (컬럼1, 컬럼2, ...)
+VALUES 
+(데이터1, 데이터2, ...)
+(데이터1, 데이터2, ...)
 
 
+INSERT INTO taxi_info_1(location_id, pickup_datetime, dispatching_base_num, borough,
+zone, service_zone, dropoff_datetime, dropoff_location_id, dropoff_borough,
+dropoff_zone, dropoff_service_zone)
+VALUES
+(1, "2021-03-24", "100", "mapo", "red zone", "mapo_2", "2021-03-24", 10,
+"gangnam", "yellow zone", "gangnam_2"),
+(2, "2021-03-24", "200", "guro", "blue zone", "guro_3", "2021-03-24", 20,
+"jongro", "red zone", "jongro_2") ;
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![baisc_15.png](./images/baisc_15.png)
 
 
 
