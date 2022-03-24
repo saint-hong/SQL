@@ -16,6 +16,7 @@ USE taxi_trips ;
 ```spl
 SELECT DATABASE() ; 
 ```
+
 ![basic_1.png](./images/basic_1.png)
 
 ### 4. 테이블 만들기
@@ -79,19 +80,19 @@ CREATE TABLE taxi_info_1 (
    - 단 기존의 컬럼의 제약조건을 PRIMARY KEY로 수정할 경우 NOT NULL 제약조건이 걸려 있어야 한다. 
    - 기본키라고도 부른다.
 - **FOREIGN KEY** : 다른 테이블과 연결해 주는 기능이다. 외래키라고도 부른다.
-      - FOREIGN KEY order -> REFERENCE customer : order 컬럼이 customer 컬럼을 참조한다. customer 컬럼에 따라서 order 컬럼의 입력이 변경된다. 
-- FORIEGN KEY의 세부기능 설정
-      - ON DELETE 데이터 삭제, ON UPDATE 데이터 수정
-      - CASCADE : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼에서도 동일 발생
-      - SET NULL : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼은 NULL로 변경됨
-      - NO ACTION : 참조 컬럼에서 수정, 삭제가 발생해도 참조되는 컬럼은 변경되지 않는다.
-      - SET DEFAULT : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼은 기본값으로 변경된다.
-      - RESTRICT : 참조 컬럼에 데이터가 남아있으면, 참조되는 테이블의 데이터를 수정, 삭제할 수 없다. 
-      - FORIEGN KEY는 따로 정리할 것
+   - FOREIGN KEY order -> REFERENCE customer : order 컬럼이 customer 컬럼을 참조한다. customer 컬럼에 따라서 order 컬럼의 입력이 변경된다.
+- **FORIEGN KEY의 세부기능 설정**
+   - ON DELETE 데이터 삭제, ON UPDATE 데이터 수정
+   - CASCADE : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼에서도 동일 발생
+   - SET NULL : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼은 NULL로 변경됨
+   - NO ACTION : 참조 컬럼에서 수정, 삭제가 발생해도 참조되는 컬럼은 변경되지 않는다.
+   - SET DEFAULT : 참조 컬럼에서 수정, 삭제가 발생하면 참조되는 컬럼은 기본값으로 변경된다.
+   - RESTRICT : 참조 컬럼에 데이터가 남아있으면, 참조되는 테이블의 데이터를 수정, 삭제할 수 없다. 
+   - FORIEGN KEY는 따로 정리할 것
 ```sql
 CONSTRAINT 외래키명
 FOREIGN KEY (참조되는 컬럼명)
-REFERNCES 참조테이블명(참조 컬럼명) ON DELETE CASCADE
+REFERENCES 참조테이블명(참조 컬럼명) ON DELETE CASCADE
 ```
 
 - 제약조건이 있는 테이블 생성
