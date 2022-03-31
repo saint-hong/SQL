@@ -235,9 +235,10 @@ FROM <table_name> ;
 ```
 
 - 전체 컬럼 불러오기
+- SELECT에 `*`을 사용
 
 ```sql
-SELECT name, countrycode
+SELECT *
 FROM city ;
 ```
 
@@ -322,6 +323,159 @@ WHERE population BETWEEN 10000000 AND 50000000 ;
 ```
 
 ![baisc_22.png](./images/baisc_22.png)
+
+
+### 5. ORDER BY
+- 데이터 정렬
+   - 기본값 오름차순 ASC
+   - 내림차순 DESC
+
+#### city 데이터에서 name 컬럼을 오름차순으로 정렬하여 데이터 불러오기
+
+```sql
+SELECT *
+FROM city
+ORDER BY name ;
+```
+
+![baisc_23.png](./images/baisc_23.png)
+
+
+#### city 데이터에서 population 컬럼을 내림차순으로 정렬하여 데이터 불러오기
+
+```sql
+SELECT *
+FROM city
+ORDER BY population DESC ;
+```
+
+![baisc_24.png](./images/baisc_24.png)
+
+#### city 데이터에서 countrycode는 오름차순, population은 내림차순으로 불러오기
+- 나라별코드에서 인구가 많은 순서데로 데이터를 불러올 수 있다.
+
+```sql
+SELECT *
+FROM city
+ORDER BY countrycode, population DESC ;
+```
+
+![basic_25.png](./images/basic_25.png)
+
+### 6. CONCAT
+- SELECT 한 컬럼의 데이터를 합쳐서 하나의 컬럼으로 불러오는 기능
+- CONCAT()안에 합칠 컬럼명을 나열한다.
+   - 데이터의 순서가 뒤에 오는 컬럼명은 " " 안에 기호나 공백을 사용할 수 있다.
+   - ``" ",," "`` : 이러한 구조는 지켜져야한다.
+
+```sql
+SELECT 컬럼명1, CONCAT(컬럼명2, "기호",컬럼명3,"기호")
+FROM 테이블명 ;
+```
+
+#### country 데이터에서 population과 gnp 컬럼을 하나로 합쳐서 불러오기
+- 나라별로 인구수와 gnp 데이터를 하나의 컬럼에서 볼 수 있다.
+- alias를 사용하여 컬럼명을 변경
+
+```sql
+SELECT name, CONCAT(population, " / ",gnp,"") as pop_gnp
+FROM country ;
+```
+
+![baisc_26.png](./images/baisc_26.png)
+
+#### country 데이터에서 name과 code 컬럼을 하나로 합쳐서 불러오기
+- 나라의 이름과 나라의 코드 데이터를 하나의 컬럼에서 볼 수 있다.
+
+```sql
+SELECT CONCAT(name, " (",code,")") as name_code, continent, region, surfacearea
+FROM country ;
+```
+
+![baisc_27.png](./images/baisc_27.png)
+
+### 7. LIKE
+- 특정한 문자가 포함된 데이터를 불러올 수 있다.
+- WHERE 절에 사용
+- % 기호를 붙이면 검색할 문자외에 어떤 문자열이라도 올 수 있다는 의미이다.
+
+```sql
+WHERE 컬럼명 LIKE "문자"    : 문자만 검색
+WHERE 컬럼명 LIKE "%문자"   : 문자 앞에 어떤 문자가 있어도 함께 검색 (문자가 뒤에 위치한다.)
+WHERE 컬럼명 LIKE "문자%"   : 문자 뒤에 어떤 문자가 있어도 함께 검색 (문자가 앞에 위치한다.)
+WHERE 컬럼명 LIKE "%문자%"  : 문자의 앞뒤에 어떤 문자가 있어도 함께 검색 (문자가 가운데에 위치한다.)
+```
+
+- NOT을 붙이면 문자가 없는 것을 검색한다.
+
+```
+WHERE 컬럼명 NOT LIKE "문자"
+```
+
+#### city 테이블의 contrycode 컬럼에서 U 문자가 들어간 데이터 불러오기
+- %가 앞에 있으므로 U가 뒤에 위치한 데이터를 불러온다.
+
+```sql
+SELECT *
+FROM city
+WHERE countrycode LIKE "%U" ;
+```
+
+![baisc_28.png](./images/baisc_28.png)
+
+
+- %가 뒤에 있으면 U가 앞에 위치한 데이터를 불러온다.
+
+```sql
+SELECT *
+FROM city
+WHERE countrycode LIKE "U%" ;
+```
+
+![baisc_29.png](./images/baisc_29.png)
+
+
+#### user_1 테이블의 email 컬럼에서 daum 메일이 아닌 데이터 불러오기
+
+```sql
+SELECT *
+FROM user_1
+WHERE email NOT LIKE "%@daum%" ;
+```
+
+![baisc_30.png](./images/baisc_30.png)
+
+
+### 8. IN
+- WHERE 절에서 여러개의 조건을 사용할 때 간단하게 할 수 있다.
+- 검색조건 OR 검색조건의 의미이다
+
+```
+WHERE 컬럼 IN ("검색조건", "검색조건", "검색조건")
+```
+
+#### city 테이블에서 countrycode 컬럼의 데이터가 AFG 또는 NLD 불러오기
+- IN을 사용하지 않았을 때
+
+```sql
+SELECT *
+FROM city
+WHERE countrycode = "AFG" OR countrycode = "NLD" ;
+```
+
+- IN을 사용했을 때
+
+```sql
+SELECT *
+FROM city
+WHERE countrycode IN ("AFG", "NLD") ;
+```
+
+![baisc_31.png](./images/baisc_31.png)
+
+
+
+
 
 
 
