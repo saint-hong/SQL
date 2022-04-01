@@ -473,47 +473,211 @@ WHERE countrycode IN ("AFG", "NLD") ;
 
 ![baisc_31.png](./images/baisc_31.png)
 
+### 9. LIMIT
+- 검색 결과의 수를 설정한다.
+- 데이터의 크기가 클 경우 LIMIT을 설정하여 데이터의 일부분만 출력하는 것이 좋다.
+   - 조회시간을 단축 할 수 있고, 업데이트시의 실수를 줄일 수 있다.
+
+#### city 테이블에서 위에서 3번째까지의 데이터 불러오기
+
+```sql
+SELECT *
+FROM city
+LIMIT 3 ;
+```
+
+![baisc_32.png](./images/baisc_32.png)
 
 
+#### city 테이블에서 위에서 10번쨰까지의 데이터 불러오기
+
+```sql
+SELECT *
+FROM city
+LIMIT 10 ;
+```
+
+![baisc_33.png](./images/baisc_33.png)
+
+#### city 테이블에서 위에서부터 4번째부터 5번쨰 후까지 데이터 불러오기
+- LIMIT a, b : (a+1) 부터 (a+1) + (b-1) 까지
+   - LIMIT 3, 5 : (3+1) 부터 (3+1) + (5-1) 까지 
+
+```sql
+SELECT *
+FROM city
+LIMIT 3, 5 ;
+```
+
+![baisc_34.png](./images/baisc_34.png)
+
+#### city 테이블에서 위에서부터 16번째부터 13번째 후까지 데이터 불러오기
+- LIMIT 15, 14 : 16 ~ 29 까지 데이터
+
+```sql
+SELECT *
+FROM city
+LIMIT 15, 14 ;
+```
+![baisc_35.png](./images/baisc_35.png)
+
+### 10. UPDATE
+- 테이블의 데이터 값을 업데이트 해준다.
+- WHERE 절에서 변경할 데이터를 정하고 SET 절에서 변경값을 입력해준다.
+
+```
+UPDATA <테이블명>
+SET <컬럼명>=변경값, <컬럼명>="변경값"
+WHERE <컬럼명>=현재값
+```
+
+#### user_1 테이블의 name이 gong인 데이터의 email과 age값 update
+- 변경전 user_1 테이블의 데이터
+
+![baisc_36.png](./images/baisc_36.png)
+
+- 변경후 user_1 테이블의 데이터
+
+```sql
+UPDATE user_1
+SET email="gong_1234@gmail.com", age=30
+WHERE name="gong" ;
+```
+
+![baisc_37.png](./images/baisc_37.png)
+
+### 11. DELETE
+- 데이터 삭제
+- WHERE 절과 함께 사용하면 특정 조건의 데이터를 삭제할 수 있다.
+
+#### user_1 테이블에서 2018년 이전의 데이터 삭제
+- user_1의 2018년 이전 데이터
+
+![baisc_38.png](./images/baisc_38.png)
+
+- user_1의 2018년 이전 데이터 삭제
+
+```sql
+DELETE FROM user_1
+WHERE rdate < "2018-01-01" ;
+```
+![baisc_39.png](./images/baisc_39.png)
 
 
+### 12. GROUP BY
+- 특정 컬럼의 동일한 데이터를 하나로 묶어준다.
+- 그룹함수를 함께 사용하여 연산을 할 수 있다.
+   - count, min, max, avg, sum
+
+#### count 함수 
+- city 테이블에서 countrycode별 갯수 계산
+- countrycode 컬럼을 GROUP BY로 묶어준다.
+   - SELECT 에서 countrycode 만 선택하면 중복데이터가 사라진 countrycode가 나온다.
+   - SELECT 에서 count(countrycode)만 선택하면 중복데이터 사라진 countrycode 별 갯수가 나온다.
+   - SELECT 에서 countrycode와 count(countrycode)를 함께 선택하면 코드와 코드별 갯수가 나온다.
+
+```sql
+SELECT countrycode, count(countrycode)
+FROM city
+GROUP BY countrycode ;
+```
+
+![baisc_40.png](./images/baisc_40.png)
+
+- city 테이블에서 전체 코드의 갯수 계산
+- countrycode를 중복데이터를 제거하고 count로 갯수를 세어준다.
+
+```sql
+SELECT count(distinct(countrycode)) as code_count
+FROM city ; 
+```
+
+![baisc_41.png](./images/baisc_41.png)
+
+#### max 함수
+- country 테이블에서 대륙별 최대인구와 최대 gnp 계산
+
+```sql
+SELECT continent, max(population) as population, max(gnp) as gnp
+FROM country
+ORDER BY continent ;
+```
+
+![baisc_42.png](./images/baisc_42.png)
+
+#### min 함수
+- country 테이블에서 대륙별 최소인구수와 최소 gnp 계산
+- population과 gnp가 0이 아닌 데이터 중에서 계산
+- **WHERE 절은 GROUP BY보다 앞에 사용한다.**
+
+```sql
+SELECT continent, min(population) as pop, min(gnp) as gnp
+FROM country
+WHERE population != 0 AND gnp != 0
+GROUP BY continent ; 
+```
+
+![baisc_43.png](./images/baisc_43.png)
+
+#### sum 함수
+- country 테이블에서 대륙별 총인구수와 gnp합계 계산
+
+```sql
+SELECT continent, sum(population) as pop_sum, sum(gnp) as gnp_sum
+FROM country
+WHERE population != 0 AND gnp != 0
+GROUP BY continent ; 
+```
+
+![baisc_44.png](./images/baisc_44.png)
+
+#### avg 함수
+- country 테이블에서 대륙별 평균 인구수와 평균 gnp 계산
+- population과 gnp의 값이 0이 아닌 데이터만 사용
+- 평균 인구수의 내림차순으로 정렬
+- **ORDER BY는 GROUP BY 다음에 사용한다**
+
+```sql
+SELECT continent, AVG(population) as pop_avg, AVG(gnp) as gnp_avg
+FROM country
+WHERE population != 0 AND gnp != 0
+GROUP BY continent
+ORDER BY pop_avg DESC ; 
+```
+
+![baisc_45.png](./images/baisc_45.png)
 
 
+### 13. HAVING
+- GROUP BY 의 결과에 대한 조건을 설정할 수 있다.
+   - WHERE 절은 GROUP BY 앞에 사용
+   - **HAVING 절은 GROUP BY 뒤에 사용**
 
+#### country 테이블에서 대륙별 총인구수를 구하고 5억명 이상인 대륙만 계산
 
+```sql
+SELECT continent, SUM(population) as pop
+FROM country
+GROUP BY continent
+HAVING pop >= 500000000 ;
+```
 
+![baisc_46.png](./images/baisc_46.png)
 
+#### country 테이블에서 대륙별 평균인구수, 평균GNP, 1인당 평균GNP를 계산
+- population과 gnp가 0이 아닌 데이터만 사용
+- 1인당 gnp 값이 0.01 이상인 데이터만 조회
+- 1인당 gnp 값으로 내림차순 정렬
 
+```sql
+SELECT continent, AVG(population) as pop_avg, AVG(gnp) as gnp_avg,
+	(AVG(population) / AVG(gnp)) * 1000 as avg
+FROM country
+WHERE population != 0 AND gnp != 0
+GROUP BY continent
+HAVING avg >= 0.01
+ORDER BY avg DESC ;
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![baisc_47.png](./images/baisc_47.png)
 
