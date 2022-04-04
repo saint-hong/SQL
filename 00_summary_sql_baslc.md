@@ -681,3 +681,182 @@ ORDER BY avg DESC ;
 
 ![baisc_47.png](./images/baisc_47.png)
 
+### 14. CEIL
+- 실수 데이터를 **올림** 해준다.
+
+```sql
+SELECT CEIL(12.34);
+
+>>>
+
+13
+```
+
+#### countrylanguage 테이블에서 percentage를 반올림하기
+
+```sql
+SELECT countrycode, language, percentage, CEIL(percentage)
+FROM countrylanguage ;
+```
+
+![baisc_48.png](./images/baisc_48.png)
+
+
+### 15. ROUND
+- 실수 데이터를 **반올림** 해준다.
+
+```sql
+SELECT ROUND(12.345, 2) ;
+
+>>>
+
+12.35
+
+SELECT ROUND(12.345, 1) ;
+
+>>>
+
+12.3
+```
+
+#### countrylanguage 테이블에서 percentage를 소수첫번쨰 자리에서 반올림하기
+
+```sql
+SELECT countrycode, language, percentage, ROUND(percentage, 0)
+FROM countrylanguage ;
+```
+
+![baisc_49.png](./images/baisc_49.png)
+
+
+### 16. TRUNCATE
+- 실수 데이터를 **버림** 할 때 사용한다.
+
+```sql
+SELECT TRUNCATE(12.345, 2) ;
+
+>>>
+
+12.34
+```
+
+#### countrylanguage 테이블에서 percentage를 소수점 첫번쨰 자리에서 버림하기
+
+```sql
+SELECT countrycode, language, percentage, TRUNCATE(percentage, 0)
+FROM countrylanguage ; 
+```
+
+![baisc_50.png](./image/baisc_50.png)
+
+### 17. CONDITION
+- 조건문
+- IF, CASE
+
+### 17.1 IF
+
+```sql
+IF(조건문, 참일 때 결과, 거짓일 때 결과)
+```
+- city 테이블에서 인구가 100만이 넘으면 big_city, 100만이 안되면 small_city로 출력하기
+
+```sql
+SELECT name, population , IF(population >= 1000000, "big_city", "small_city") as city_scale
+FROM city ; 
+```
+![baisc_51.png](./images/baisc_51.png)
+
+### 17.2 IFNULL
+- 컬럼에 null 값이 있는 경우 다른 값으로 출력 해준다. 
+
+```sql
+SELECT <컬럼명>, IFNULL(<컬럼명>, <null이면 출력할 값>)
+```
+
+#### country 테이블에서 gnpold 컬럼에 null 있으면 0으로 출력
+
+```sql
+SELECT gnpold, IFNULL(gnpold, 0) as gnpold_null
+FROM country ;
+```
+
+![baisc_52.png](./images/baisc_52.png)
+
+### 17.3 CASE
+- 컬럼을 조회할 때 여러가지 조건을 설정하여, 조건에 부합하면 설정한 결과값을 출력해준다.
+- <조건>에는 컬럼명과 조건을 입력한다. : population >= 10000
+- END AS <컬럼명>에는 결과값을 담을 새로운 컬럼의 이름을 입력한다.
+
+```sql
+CASE
+    WHEN <조건1> THEN <결과값1>
+    WHEN <조건2> THEN <결과값2>
+END AS <컬럼명>    
+```
+
+#### country 테이블에서 인구가 10억, 1억명 이상인 경우 특정한 값을 출력하기
+
+```sql
+SELECT name, population,
+	CASE
+		WHEN population > 1000000000 THEN "upper 1 bilion"
+		WHEN population > 100000000 THEN "upper 100 milion"
+		ELSE "below 100 milion"
+	END AS result
+FROM country
+ORDER BY population DESC ;
+```
+
+![baisc_53.png](./images/baisc_53.png)
+
+### 18. DATE_FORMAT
+- 날짜 데이터에 대한 포멧을 변경해 준다.
+- MySQL 날짜 데이터 관련 docs
+    - https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html
+
+![baisc_55.png](./images/baisc_55.png)
+
+#### sakila 데이터베이스의 payment 테이블에서 월별 총 수입 조회하기
+- payment_date의 날짜 데이터를 "네글자 년-두글자 월" 형식을 변경한다.
+- 이것을 GROUP BY 하여 월별로 정리하고 각 월별 amount 컬럼의 데이터를 합해준다. 
+
+```sql
+SELECT DATE_FORMAT(payment_date, "%Y-%m") AS monthly, SUM(amount) as amount
+FROM payment
+GROUP BY monthly ; 
+```
+
+![baisc_54.png](./images/baisc_54.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
