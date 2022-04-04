@@ -747,7 +747,7 @@ SELECT countrycode, language, percentage, TRUNCATE(percentage, 0)
 FROM countrylanguage ; 
 ```
 
-![baisc_50.png](./image/baisc_50.png)
+![baisc_50.png](./images/baisc_50.png)
 
 ### 17. CONDITION
 - 조건문
