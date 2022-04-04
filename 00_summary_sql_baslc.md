@@ -360,7 +360,7 @@ FROM city
 ORDER BY countrycode, population DESC ;
 ```
 
-![basic_25.png](./images/basic_25.png)
+![baisc_25.png](./images/baisc_25.png)
 
 ### 6. CONCAT
 - SELECT 한 컬럼의 데이터를 합쳐서 하나의 컬럼으로 불러오는 기능
