@@ -816,6 +816,47 @@ ORDER BY population DESC ;
 
 ![baisc_55.png](./images/baisc_55.png)
 
+#### 현재 DATE로 날짜 형식 변환하기
+- 2022-04-04
+
+```sql
+SELECT DATE_FORMAT(NOW(), "%Y-%m-%d") as date ;
+
+>>>
+
+2022-04-04
+```
+
+- 2022-04-04, 12:35:30
+
+```sql
+SELECT DATE_FORMAT(NOW(), "%Y-%m-%d, %T") ;
+
+>>>
+
+2022-04-04, 12:36:02
+```
+
+- 22.4.4
+
+```sql
+SELECT DATE_FORMAT(NOW(), "%y.%c.%e") as date ; 
+
+>>>
+
+22.4.4
+```
+
+- 현재 월, 요일을 영어 표기로 나타내기
+
+```sql
+SELECT DATE_FORMAT(NOW(), "%M, %b, %W, %a") as date ; 
+
+>>>
+
+April, Apr, Monday, Mon
+```
+
 #### sakila 데이터베이스의 payment 테이블에서 월별 총 수입 조회하기
 - payment_date의 날짜 데이터를 "네글자 년-두글자 월" 형식을 변경한다.
 - 이것을 GROUP BY 하여 월별로 정리하고 각 월별 amount 컬럼의 데이터를 합해준다. 
