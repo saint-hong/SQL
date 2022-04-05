@@ -196,10 +196,49 @@ on film_table.film_id = actor_table.film_id ;
 
 ![join_right_2.PNG](./images/join_right_2.PNG)
 
-### outer join
+### UNION
+- SELECT 절의 결과 데이터를 하나로 합쳐서 출력해준다.
+- 컬럼의 갯수, 타입, 순서가 같아야 한다.
+- UNION 은 자동으로 distinct 즉 중복제거를 해준다. 
+- UNION, UNION ALL, full outer union
+
+#### UNION
+- UNION을 기준으로 앞뒤의 두 SELECT 절의 컬럼을 한줄로 합쳐준다.
+- actor 테이블의 name과 film 테이블의 title 컬럼의 데이터를 한줄로 반환한다.
+- 중복 데이터는 자동으로 제거하여 하나만 반환한다.
+
+```sql
+SELECT name
+FROM actor
+UNION
+SELECT title
+FROM film ;
+```
+
+![join_union.png](./images/join_union.png)
+
+
+#### UNION ALL
+- UNION 과 같이 두 SELECT 절의 컬럼 데이터를 합하고 중복 데이터를 그대로 합쳐준다.
+- 중복 데이터도 그대로 반환한다.
+
+- film 테이블의 title컬럼과 actor 테이블의 film_id 컬럼을 중복데이터 그대로 한줄로 반환한다.
+
+```sql
+SELECT title
+FROM film
+UNION ALL
+SELECT film_id
+FROM actor ;
+```
+
+![join_union_2.png](./images/join_union_2.png)
+
+
+#### full outer join
 - union 을 사용하여 두 테이블의 모든 데이터를 합하여 보여준다.
 - left join 과 right join 을 union 으로 합한다.
-- 단 from 으로 설정한 테이블이 같아야 한다.
+- **단 from 으로 설정한 테이블이 같아야 한다.**
 
 ```sql
 select film_table.film_id, film_table.title, film_table.release_year,
