@@ -7,6 +7,8 @@
 ```
 from 에서 어떤 테이블을 설정하느냐에 따라서 left, right join 의 출력이 달라진다.
 ```
+![join.png](./images/join.png)
+
 ## database 생성
 
 ```sql
