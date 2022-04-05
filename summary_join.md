@@ -2,11 +2,9 @@
 - 여러개의 테이블을 합해준다. 
 - 기본적으로 inner join, left join, right join, outer join 이 있다.
 - 행을 기준으로 데이터를 합한다.
-- 헷갈리는 부분 :
+- 헷갈리는 부분 : left join 과 right join의 기준 테이블과 합쳐지는 테이블의 개념
+    - 많은 블로그들에서 left join과 right join을 모호하게 설명한다. 확실하게 알고 가자.
 
-```
-from 에서 어떤 테이블을 설정하느냐에 따라서 left, right join 의 출력이 달라진다.
-```
 ![join.png](./images/join.png)
 
 ## database 생성
@@ -99,18 +97,29 @@ on film_table.film_id = actor_table.film_id ;
 ![join_join.PNG](./images/join_join.PNG)
 
 ### left join, right join 
-- left join 과 right join 은 두개의 테이블 중에서 left, right로 정한 테이블을 기준으로 합한다.
-- 기준으로 정한 테이블의 모든 값을 불러오고, 다른 테이블이 여기에 일치하지 않을 경우 null 값으로 출력된다.
-- 중요한점 : 
+- left join과 right join은 다이어그램에서 볼 수 있듯이 직관적으로 left의 테이블의 데이터를 가져오고, right 테이블의 데이터를 가져온다는 것을 알 수 있다.
+- 그렇다면 left와 right의 기준은 어떻게 설정할까? from 절에 오는 컬럼이 기준 테이블인가?
+- 많은 블로그를 찾아봤지만 left join과 right join의 기능 설명이 애매모호하다.
+- from 과 left join, right join 의 관계를 정확하게 알고 넘어가자.
+- **핵심** :
+
 ```
-왼쪽에 오는 테이블을 기준으로 하며, from 에서 정한다.
+LEFT JOIN 과 RIGHT JOIN은 기준테이블이 다르다.
 ```
-- from 에 어떤 테이블을 놓느냐에 따라서 left, right join 의 기준이 달라지게 된다.
 
 #### left join
-- 왼쪽 테이블로 film_table 을 설정한 경우
-- film_table 이 왼쪽으로 설정되었고, left join actor_table 에서 왼쪽 테이블이 기준이 된다.
-- 따라서 film_table 의 모든 값이 출력되고, 여기에 일치하지 않는 actor_table 의 값은 null 로 출력된다.
+- left join의 핵심 : from 절의 테이블이 기준이고 left join 절의 테이블이 합해지는 테이블이다.
+
+```
+FROM a
+LEFT JOIN b
+
+>>>
+
+a를 기준으로 b를 결합해라. 즉 a의 데이터는 전부, b의 데이터는 a와 겹치는 것만 출력된다.
+```
+
+- film_table을 기준으로 actor_table을 결합한다. 즉 actor_tabel에서 film_table과 겹치지 않느 데이터는 null로 표시된다. 
 
 ```sql
 select film_table.film_id, film_table.title, film_table.release_year,
@@ -123,8 +132,30 @@ on film_table.film_id = actor_table.film_id ;
 ![join_left.PNG](./images/join_left.PNG)
 
 #### rignt join
-- film_table 이 왼쪽으로 설정되었고, right join actor_table 에서 오른쪽 테이블이 기준이 된다.
-- 따라서 actor_table 의 모든 값이 출력되고, 여기에 일치하지 않는 film_table 의 값은 제외된다. 
+- 위의 left join의 설명대로 하면 right join이 틀리게 출력된다. 그래서 많은 블로그들에서 이부분을 제대로 설명하지 않는 것 같다. 
+- left join의 기준대로라면 다음 right join은 이렇게 풀이된다.
+
+```
+FROM b
+RIGHT JOIN a
+
+>>>
+
+b를 기준으로 a를 결합해라.
+```
+- 이렇게 보면 b가 기준테이블이므로 b와 일치하지 않는 a가 null이 표시될 것 같다. 그런데 정반대로 left join과 같은 결과가 나온다.
+- 이유는 right join은 기준 테이블이 from 이 아니라 right join이기 때문이다.
+
+```
+FROM b
+RIGHT JOIN a
+
+>>>
+
+a를 기준으로 b를 결합한다.
+```
+- **따라서 right join에서는 기준이 되는 테이블을 right join 절에 놓아야 한다.**
+- actor_table을 기준으로 film_table을 결합한다.
 
 ```sql
 select film_table.film_id, film_table.title, film_table.release_year,
@@ -136,10 +167,10 @@ on film_table.film_id = actor_table.film_id ;
 
 ![join_righ.PNG](./images/join_right.PNG)
 
-#### 왼쪽 테이블로 actor_table 을 설정한 경우
-- from film_table 을 설정한 경우와 반대로 출력된다. 
-- left join
-- from film_table 의 right_join actor_table 과 같은 결과가 출력된다.
+
+#### actor_table을 기준으로 left join
+- **from actor_table을 기준으로 left join film_table을 결합한다.**
+- from film_table right join actor_table과 같다.
 
 ```sql
 select film_table.film_id, film_table.title, film_table.release_year,
@@ -151,9 +182,9 @@ on film_table.film_id = actor_table.film_id ;
 
 ![join_left_2.PNV](./images/join_left_2.PNG)
 
-#### 오른쪽 테이블로 film_table 을 설정한 경우
-- right join
-- from film_table 의 left join actor_table 과 같은 결과가 출력된다.
+#### film_table을 기준으로 right join
+- **right join film_table을 기준으로 from actor_table을 결합한다.**
+- from film_table left join actor_table과 같다.
 
 ```sql
 select film_table.film_id, film_table.title, film_table.release_year,
