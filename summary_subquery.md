@@ -98,6 +98,9 @@ SELECT *
 	ON city.countrycode = country.code
 ORDER BY city.city_count DESC ;
 ```
+
+![subquery_7.png](./images/subquery_7.png)
+
 - where 절에 subquery를 사용하면 에러가 발생한다.
     - subquery의 컬럼을 하나만 사용하라는 에러
 
@@ -110,8 +113,3 @@ WHERE code IN (
 		GROUP BY countrycode
 		HAVING  count >= 10) ;
 ```
-
-
-
-
-
