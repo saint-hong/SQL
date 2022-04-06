@@ -1,5 +1,5 @@
 # MySQL Test
-- world 데이터 베이스를 사용한 코딩 문제를 풀어 보았다.
+- world 데이터 베이스를 사용한 코딩 문제 테스트
 - 테이블과 컬럼
     - city
         - id, name, countrycode, district, population
