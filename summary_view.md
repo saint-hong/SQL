@@ -101,7 +101,7 @@ SELECT countrycode, name, population
 FROM city ;
 ```
 
-- view_1 이름으로 새로운 데이터를 생성되었다.
+- view_1 이름으로 새로운 데이터가 생성되었다.
 
-![view_8.png](./imgaes/view_8.png)
+![view_8.png](./images/view_8.png)
 
