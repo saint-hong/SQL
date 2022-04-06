@@ -51,6 +51,57 @@ ORDER BY population DESC ;
 ![view_4.png](./images/view_4.png)
 
 
+### 다른 기능
 
+#### view의 컬럼 구조 확인
 
+```sql
+DESC country_code_name ; 
+```
+
+![view_5.png](./images/view_5.png)
+
+#### view의 세부정보 확인
+
+```sql
+SHOW CREATE VIEW country_code_name ; 
+```
+
+![view_6.png](./images/view_6.png)
+
+#### view 덮어 쓰기
+- 이미 만들어 놓은 view에 새로운 데이터를 덮어씌우는 기능
+- 같은 이름으로 view를 만들 수 없다. 
+
+- 새로운 veiw 생성 : 국가코드, 언어, 언어사용률
+
+```sql
+CREATE VIEW view_1 AS
+SELECT countrycode, language, percentage
+FROM countrylanguage ;
+```
+
+- view_1으로 새로운 view 생성 : 국가코드, 도시이름, 도시인구
+- 기존에 있는 view 이므로 에러가 발생한다.
+
+```sql
+CREATE VIEW view_1 AS
+SELECT countrycode, name, population
+FROM city ;
+```
+
+![view_7.png](./images/view_7.png)
+
+- CREATE OR REPLACEMENT 로 view 덮어 씌우기
+- 기존의 이름의 view로 새로운 데이터를 덮어 씌울 수 있다. 
+
+```sql
+CREATE OR REPLACE VIEW view_1 AS
+SELECT countrycode, name, population
+FROM city ;
+```
+
+- view_1 이름으로 새로운 데이터를 생성되었다.
+
+![view_8.png](./imgaes/view_8.png)
 
