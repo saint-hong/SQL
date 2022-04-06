@@ -5,7 +5,7 @@
         - id, name, countrycode, district, population
     - country
         - code, name, continent, region, surfacearea, indepyear, population, lifeexpectance
-        - - gnp, gnpold, localname, govermentform, headofstate, capital, code2
+        - gnp, gnpold, localname, govermentform, headofstate, capital, code2
     - countrylanguage
         - countrycode, language, isofficial, percentage
 
