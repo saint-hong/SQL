@@ -51,7 +51,13 @@ ORDER BY population DESC ;
 ![view_4.png](./images/view_4.png)
 
 
-### 다른 기능
+### 추가 기능
+
+#### view 삭제
+
+```sql
+DROP VIEW <뷰이름>, <뷰이름>, <뷰이름> ; 
+```
 
 #### view의 컬럼 구조 확인
 
