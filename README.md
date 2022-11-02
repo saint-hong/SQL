@@ -42,3 +42,61 @@ Description and Summary of the use of the SQL
 - 열(column)은 테이블의 특정 필드와 관련된 모든 정보를 포함하는 테이블의 수직 엔터티이다.   
     - **열=필드=수직 엔터티**
 
+## 6. Some of the most important SQL commands
+- `SELECT` : 데이터베이스에서 데이터 추출
+- `UPDATE` : 데이터베이스에 데이터 업데이트
+- `DELETE` : 데이터베이스에 데이터 삭제
+- `INSERT INTO` : 새로운 데이터를 데이터베이스에 삽입
+- `CREATE DATABASE` : 새로운 데이터 베이스 만들기
+- `ALTER DATABASE` : 데이터 베이스 수정하기
+- `CREATE TABLE` : 새로운 테이블 만들기
+- `ALTER TABLE` : 테이블 수정하기
+- `DROP TABLE` : 테이블 삭제
+- `CREATE INDEX` : 인덱스 생성하기(검색 키)
+- `DROP INDEX` : 인덱스 삭제
+
+## 7. SQL commands
+- statements : 문
+- clause : 절
+- `SELECT DISTINCT` : 고유한 값만 반환, 중복을 제거한 데이터만 반환
+- `SELECT COUNT(DISTINCT)` : 데이터의 갯수 계산, MS Access에서는 사용 불가
+- `WHERE` : 레코드 필터링 명령어, 조건을 충족하는 레코드만 추출하는데 사용
+    - **WHERE절은 SELECT문이나 UPDATE, DELETE문에서도 사용할 수 있다.**
+- `WHERE절 Operators`
+    - =, >, <, <=, >=
+    - **<> 은 != 과 같다. 일부 SQL 버전마다 다름**
+    - BETWEEN : 일정 범위 사이의 조건
+    - LIKE : 패턴 검색, WHERE col1 LIKE "%A" (%의 위치에 따라 조건 바뀜)
+    - IN : 열에서 여러가지 값을 지정, WHERE col1 IN (val1, val2, ...)
+    - AND : 조건 모두 True이면 결과 반환
+    - OR : 조건 하나라도 True이면 결과 반환
+    - NOT : Not True 인 조건에서 결과 반환
+    - **AND, OR, NOT을 조합하여 사용가능** 
+        - WHERE 조건 AND (조건 OR 조건) 
+        - WHERE NOT 조건 AND NOT 조건
+- `ORDER BY` : 결과를 정렬한다.
+    - ASCENDING, ASC : 오름차순, 디폴트값
+    - DECENDING, DESC : 내림차순
+    - 여러 컬럼에 적용 가능
+- `INSERT INTO` : 테이블에 새로운 레코드 삽입
+    - INSERT INTO table_name (col1, col2, ...) VALUES (val1, val2, ...) : 일부 컬럼
+    - INSERT INTO table_name VALUES (val1, val2, ...) : 모든 컬럼
+- `NULL` : 값이 없는 필드, 0이나 공백과 다름
+    - IS NULL : NULL 값을 찾아준다.
+    - IS NOT NULL : 비어 있지 않은 값을 찾아준다.
+- `UPDATE` : 테이블의 기존 레코드를 수정
+    - UPDATE table_name SET col1=val1, col2=val2, ... WHERE 조건 ; 
+    - **WHERE 절로 조건을 설정하지 않으면 모든 테이블의 값이 업데이트 된다.**
+    - WHERE 절에서 업데이트할 레코드의 수를 결정한다.
+    - 조건에서 선택되는 레코드의 갯수과 업데이트할 값의 갯수가 같아야 한다.
+- `DELETE` : 테이블의 기존 레코드를 삭제
+    - DELETE FROM table_name WHERE 조건
+    - **WHERE 절로 조건을 설정하지 않으면 모든 열(레코드)가 삭제된다. 테이블의 구조, 속성, 인덱스는 유지된다.**
+- `SELECT TOP` : 반환할 레코드의 수 지정, 수천개의 레코드가 있는 큰 테이블에서 유용
+    - 데이터 베이스 시스템에 따라서 레코드 수 지정하는 명령어가 다를 수 있다.
+    - MySQL : LIMIT
+    - Oracle : FETCH FIRST, ROWS ONLY, ROWNUM 등
+
+
+
+
