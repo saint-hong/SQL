@@ -1,8 +1,6 @@
 # SQL
 Description and Summary of the use of the SQL
 
-# SQL
-
 ## 1. What is SQL
 - `SQL Structured Query Language` : 구조적 퀴리 언어의 약자
 - sql을 사용하여 데이터 베이스에 접근하고 조작할 수 있다.
@@ -43,60 +41,4 @@ Description and Summary of the use of the SQL
     - **행=레코드=수평 엔터티**
 - 열(column)은 테이블의 특정 필드와 관련된 모든 정보를 포함하는 테이블의 수직 엔터티이다.   
     - **열=필드=수직 엔터티**
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
