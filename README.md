@@ -92,10 +92,92 @@ Description and Summary of the use of the SQL
 - `DELETE` : 테이블의 기존 레코드를 삭제
     - DELETE FROM table_name WHERE 조건
     - **WHERE 절로 조건을 설정하지 않으면 모든 열(레코드)가 삭제된다. 테이블의 구조, 속성, 인덱스는 유지된다.**
-- `SELECT TOP` : 반환할 레코드의 수 지정, 수천개의 레코드가 있는 큰 테이블에서 유용
+- `SELECT TOP or LIMIT` : 반환할 레코드의 수 지정, 수천개의 레코드가 있는 큰 테이블에서 유용
     - 데이터 베이스 시스템에 따라서 레코드 수 지정하는 명령어가 다를 수 있다.
-    - MySQL : LIMIT
-    - Oracle : FETCH FIRST, ROWS ONLY, ROWNUM 등
+    - SQL Server / MS Access : 
+        - SELECT TOP num col1 FROM table_name WHERE 조건, WHERE 절이 뒤에 옴
+        - SELECT TOP num PERCENT col1 FROM table_name WHERE 조건
+    - MySQL : 
+        - WHERE 조건 1 LIMIT num1, num2 : num1 ~ num1+num2-1
+        - WHERE 절이 앞에 옴
+    - Oracle : FETCH FIRST, ROWS ONLY, WHERE ROWNUM <= num 등
+- `MIN(col1)` : 선택한 열의 가장 작은 값 반환, SELECT 문에서 사용, function
+- `MAX(col1)` : 선택한 열의 가장 큰 값 반환, SELECT 문에서 사용, function
+- `COUNT(col1)` : 조건의 결과의 행의 수를 반환, NULL 제외
+- `AVG(col1)` : 숫자형 열의 데이터의 평균을 반환, NULL 제외
+- `SUM(col1)` : 숫자형 열의 데이터의 합을 반환, NULL 제외
+- `LIKE` : 열에서 특정한 패턴을 검색, WHERE 절에 사용
+    - WHERE col1 LIKE %+패턴1 : %는 0, 1, 문자와 함께 사용
+    - WHERE col1 LIKE \_+패턴1 : \_는 단일 문자를 한개를 의미한다.
+    - %, \_, AND, OR 를 조합해서 사용 가능
+    - MS Access : % 대신 * 사용, \_ 대신 ? 사용
+    - WHERE col1 NOT LIKE 패턴1 : 패턴1이 아닌 모든 것
+- `LIKE % pattern`
+    - `a%` : a로 시작하는 데이터
+    - `%a` : a로 끝나는 데이터
+    - `%a%` : 어떤 위치는 a가 있는 데이터
+    - `_r%` : 두번쨰 자리에 r이 있는 데이터
+    - `a_%` : a로 시작하고 길이가 2자 이상인 데이터
+    - `a__%` : a로 시작하고 길이가 3자 이상인 데이터
+    - `a%o` : a로 시작하고 o로 끝나는 데이터
+
+#### SQL Wildcard Character
+- `wildcard character` : 문자열에서 하나 이상의 문자를 대체하는 문자
+- LIKE operator와 같이 사용한다.
+- **MS Access** :
+    - `*` : 0개 이상의 문자
+        - bl* -> bl, black, blue 등
+    - `?` : 단일 문자
+        - h?t -> hot, hat, hit 등
+    - `[]` : 대괄호안의 단일문자
+        - h[oa]t -> hot, hat을 찾고, hit 제외, o or a
+    - `!` : 대괄호가 아닌 모든 문자
+        - h[!oa]t -> hit을 찾고, hot, hat 제외
+    - `-` : 지정된 범위내의 모든 단일문자
+        - c[a-b]t -> cat, cbt 찾고 cut 제외
+    - `#` : 단일 숫자문자
+        - 2#5 -> 205, 215, 225, 235, 245, 265, 275, 285, 295
+    - `[!a-f]%` : 첫글자가 a-f 사이의 문자가 아닌 데이터
+    - `_[a-c]%` : 두번쨰 글자가 a-c 사이의 문자인 데이터
+- **SQL server** : 
+    - `%` : 0개 이상의 문자 
+    - `_` : 단일 문자
+        - h_t : hot, hat, hit
+    - `[]` : 대괄호안의 단일문자
+    - `^` : 대괄호가 아닌 모든 문자
+        - h[^oa]t -> hit 찾고, hot, hat 제외
+    - `-` : 지정된 범위내의 모든 단일문자
+    
+- `IN` : WHERE 절에 여러개의 조건을 지정
+    - WHERE col1 IN (val1, val2, ...) : val1 or val2 or ...
+    - WHERE col1 NOT IN (val1, val2, ...) : 조건이 아닌 것 반환
+    - WHERE col1 IN (SELECT col2 FROM table_name) : 조건으로 SELECT 문을 쓸 수 있다.
+        - **col1 과 col2 의 데이터 종류가 같아야 한다.**
+        - WHERE 절에 subquery를 사용한 것
+- `BETWEEN` : 주어진 범위 이내의 데이터를 찾는다. 숫자, 텍스트, 날짜 데이터 사용
+    - WHERE 절에 조건의 범위로 사용
+    - WHERE col1 BETWEEN val1 AND val2 
+        - OR는 사용이 안된다. OR는 IN ()의 기능
+    - WHERE col1 NOT BETWEEN val1 AND val2 : 범위 밖의 데이터선택
+    - **WHERE col1 BETWEEN val1 AND val2 AND col2 IN (val3, val4, va5)**
+        - AND 로 IN()이나 다른 연산자를 계속 연결하여 필터링 조건을 늘릴 수 있다.
+- `Aliases, AS` : 테이블이나 열에 임시이름 설정
+    - 열 이름을 읽기 쉽게 만들때 사용
+    - 이 이름은 해당 쿼리 안에서만 설정된다.
+    - SELECT col1 AS alias_name FROM table_name
+    - SELECT col1 FROM table_name AS alias_name : FROM 절에서 테이블에도 사용 가능
+    - **[alias name]** : 띄어쓰기나 기호를 사용한 이름을 붙일때는 대괄호 사용
+    - **FROM 절에서 서로 다른 table의 이름을 단축하여 쓰고 SELECT에서 적용가능**
+        - SELECT c.OrderID, a.OrderID FROM Customer AS c, Address AS a WHERE c.ID=o.ID : WHERE 절에서 같은 열을 표시해주어야 한다. 
+- 컬럼끼리 데이터 합할때
+    - SQL : col1 + ',' + col2
+    - MySQL : CONCAT(col1, ',' ,col2, ',', col3)
+    - ORACLE : (col1 || ',' || col2)
+- Aliases 장점 
+    - 쿼리에 사용되는 함수
+    - 쿼리에 테이블이 두개 이상 사용 될 때
+    - 열이름이 길거나 보기 어려울 때
+    - 두 개 이상의 열을 결합 할 때
 
 
 
